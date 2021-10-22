@@ -1,0 +1,39 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Brazilian blog using gatsby about V:TES strategy and rules",
+  "author": "Gabriel d'Agosto <gabriel.dagosto@engenharia.ufjf.br>",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "dev": "pnpm run /^dev:/",
+    "dev:start": "gatsby develop",
+    "dev:transform": "node ./.scripts/transformFiles.js",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.0.19",
+    "@fontsource/merriweather": "^5.0.13",
+    "@mdx-js/react": "^2.1.2",
+    "chokidar": "^3.6.0",
+    "gatsby": "^5.0.0",
+    "gatsby-plugin-image": "^3.0.0",
+    "gatsby-plugin-mdx": "^5.0.0",
+    "gatsby-plugin-sharp": "^5.0.0",
+    "gatsby-source-filesystem": "^5.0.0",
+    "gatsby-transformer-sharp": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "gatsby-plugin-postcss": "^6.13.1",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6"
+  }
+}
