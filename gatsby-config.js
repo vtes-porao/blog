@@ -1,6 +1,7 @@
 module.exports = {
+  pathPrefix: '/blog-teste/',
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: `https://vtes-porao.github.io/`,
     title: "V:TES - Powerbase Porão",
   },
   plugins: [

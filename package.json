@@ -10,9 +10,11 @@
   "scripts": {
     "dev": "pnpm run /^dev:/",
     "dev:start": "gatsby develop",
-    "dev:transform": "node ./.scripts/transformFiles.js",
+    "dev:transform": "node ./.scripts/transformFiles.js --watch",
     "start": "gatsby develop",
-    "build": "gatsby build",
+    "build": "pnpm run build:transform && pnpm run build:gatsby",
+    "build:transform": "node ./.scripts/transformFiles.js",
+    "build:gatsby": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
@@ -33,7 +35,9 @@
   "devDependencies": {
     "autoprefixer": "^10.4.19",
     "gatsby-plugin-postcss": "^6.13.1",
+    "minimist": "^1.2.8",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6"
-  }
+  },
+  "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35"
 }
