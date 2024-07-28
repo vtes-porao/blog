@@ -1,0 +1,73 @@
+name: Deploy PR preview
+
+env:
+  PREVIEW_REPO: vtes-porao/blog-previews
+  PREVIEW_UMBRELLA_PATH: preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+  pull-requests: write
+
+concurrency: preview-${{ github.ref }}
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PNPM
+        if: github.event.action != 'closed'
+        uses: pnpm/action-setup@v4
+      - name: Setup Node
+        if: github.event.action != 'closed'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - name: Change page link
+        if: github.event.action != 'closed'
+        id: pages
+        run: node ./.scripts/changeConfig.js ${{ env.PREVIEW_REPO }} ${{ env.PREVIEW_UMBRELLA_PATH }} ${{github.event.number}}
+      - name: Restore cache
+        if: github.event.action != 'closed'
+        uses: actions/cache@v4
+        with:
+          path: |
+            public
+            .cache
+          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
+          restore-keys: |
+            ${{ runner.os }}-gatsby-build-
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        run: pnpm install --frozen-lockfile
+      - name: Build with Gatsby
+        if: github.event.action != 'closed'
+        env:
+          PREFIX_PATHS: 'true'
+        run: pnpm run build
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./public
+          deploy-repository: ${{ env.PREVIEW_REPO }}
+          umbrella-dir: ${{ env.PREVIEW_UMBRELLA_PATH }}
+          token: ${{ secrets.PREVIEW_TOKEN }}

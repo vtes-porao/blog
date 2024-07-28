@@ -51,6 +51,9 @@ importers:
       gatsby-plugin-postcss:
         specifier: ^6.13.1
         version: 6.13.1(gatsby@5.13.7(babel-eslint@10.1.0(eslint@7.32.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3)(typescript@5.5.3))(postcss@8.4.39)(typescript@5.5.3)(webpack@5.93.0)
+      minimist:
+        specifier: ^1.2.8
+        version: 1.2.8
       postcss:
         specifier: ^8.4.39
         version: 8.4.39

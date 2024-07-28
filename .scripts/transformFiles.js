@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const argv = require("minimist")(process.argv.slice(2));
 
 const DIR_SOURCE = path.join(__dirname, "..", "blog");
 const DIR_TRANSFORMED = path.join(__dirname, "..", "transformed");
@@ -37,25 +38,33 @@ function processDirectory(dirName) {
   fs.writeFileSync(newFilePath, body);
 }
 
-function main() {
+function main(args) {
+  const watch = args.watch === true || args.W === true;
+  console.log('Transforming files...')
+
   // Remake transformed directory
   if (fs.existsSync(DIR_TRANSFORMED)) {
-    fs.rmSync(DIR_TRANSFORMED, {recursive: true});
+    fs.rmSync(DIR_TRANSFORMED, { recursive: true });
   }
 
-  fs.mkdirSync(DIR_TRANSFORMED, {recursive: true});
+  fs.mkdirSync(DIR_TRANSFORMED, { recursive: true });
 
   // Process all blog posts in the source directory
   fs.readdirSync(DIR_SOURCE).forEach((blogPostName) => {
     processDirectory(blogPostName);
   });
 
+  console.log('Finished first transformation.')
+
   // Then, watch for file changes
-  fs.watch(DIR_SOURCE, { recursive: true }, (event, filename) => {
-    const blogPostName = filename.match(/^([^\/\\]*)[\/\\]*/)[1];
-    console.log(`Blog post ${blogPostName} has been modified - ${event}`);
-    processDirectory(blogPostName);
-  });
+  if (watch) {
+    console.log('Watching files...')
+    fs.watch(DIR_SOURCE, { recursive: true }, (event, filename) => {
+      const blogPostName = filename.match(/^([^\/\\]*)[\/\\]*/)[1];
+      console.log(`Blog post ${blogPostName} has been modified - ${event}`);
+      processDirectory(blogPostName);
+    });
+  }
 }
 
-main();
+main(argv);
