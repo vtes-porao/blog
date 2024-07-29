@@ -1,12 +1,12 @@
 const fs = require("fs");
 const path = require("path");
+const { transformCards } = require("./cards");
+const { transformIcons } = require("./icons");
 const argv = require("minimist")(process.argv.slice(2));
 
-const DIR_SOURCE = path.join(__dirname, "..", "blog");
-const DIR_TRANSFORMED = path.join(__dirname, "..", "transformed");
+const DIR_SOURCE = path.join(__dirname, "..", "..", "blog");
+const DIR_TRANSFORMED = path.join(__dirname, "..", "..", "transformed");
 const FILENAME_MDX = "index.mdx";
-const REGEX_FRONTMATTER = /^(---[\S\s]+---)([\S\s]+)$/;
-const REGEX_CARD = /\[\[([\w\s']+)\]\]/g;
 
 function processDirectory(dirName) {
   /**
@@ -23,15 +23,8 @@ function processDirectory(dirName) {
   const filepathMdx = path.join(dirTransformed, FILENAME_MDX);
   let body = fs.readFileSync(filepathMdx, { encoding: "utf-8", flag: "r" });
 
-  if (!REGEX_CARD.test(body)) return;
-
-  // Add imports after frontmatter
-  body = body
-    .replace(
-      REGEX_FRONTMATTER,
-      `$1\n\nimport Card from '../../src/components/card.js';\n\n$2`
-    )
-    .replace(REGEX_CARD, '<Card name="$1"/>');
+  body = transformCards(body);
+  body = transformIcons(body);
 
   const newFilePath = path.join(dirTransformed, FILENAME_MDX);
 
@@ -40,7 +33,7 @@ function processDirectory(dirName) {
 
 function main(args) {
   const watch = args.watch === true || args.W === true;
-  console.log('Transforming files...')
+  console.log("Transforming files...");
 
   // Remake transformed directory
   if (fs.existsSync(DIR_TRANSFORMED)) {
@@ -54,11 +47,11 @@ function main(args) {
     processDirectory(blogPostName);
   });
 
-  console.log('Finished first transformation.')
+  console.log("Finished first transformation.");
 
   // Then, watch for file changes
   if (watch) {
-    console.log('Watching files...')
+    console.log("Watching files...");
     fs.watch(DIR_SOURCE, { recursive: true }, (event, filename) => {
       const blogPostName = filename.match(/^([^\/\\]*)[\/\\]*/)[1];
       console.log(`Blog post ${blogPostName} has been modified - ${event}`);

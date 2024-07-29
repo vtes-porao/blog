@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./krcg.css";
 
 :root {
   --maxWidth-none: "none";

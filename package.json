@@ -10,10 +10,10 @@
   "scripts": {
     "dev": "pnpm run /^dev:/",
     "dev:start": "gatsby develop",
-    "dev:transform": "node ./.scripts/transformFiles.js --watch",
+    "dev:transform": "node ./.scripts/transform/index.js --watch",
     "start": "gatsby develop",
     "build": "pnpm run build:transform && pnpm run build:gatsby",
-    "build:transform": "node ./.scripts/transformFiles.js",
+    "build:transform": "node ./.scripts/transform/index.js",
     "build:gatsby": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
