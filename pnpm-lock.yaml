@@ -38,6 +38,9 @@ importers:
       gatsby-transformer-sharp:
         specifier: ^5.0.0
         version: 5.13.1(gatsby-plugin-sharp@5.13.1(gatsby@5.13.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3))(graphql@16.9.0))(gatsby@5.13.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3))(graphql@16.9.0)
+      gatsby-transformer-yaml:
+        specifier: ^5.13.1
+        version: 5.13.1(gatsby@5.13.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3))
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -3227,6 +3230,12 @@ packages:
     peerDependencies:
       gatsby: ^5.0.0-next
       gatsby-plugin-sharp: ^5.0.0-next
+
+  gatsby-transformer-yaml@5.13.1:
+    resolution: {integrity: sha512-Abl5Ls2WjiJ+02plPaRnyZN/KmTns38EO+wcQiAhPo/4z0L2t013GUyuYAJzAkSfBSb9umdqEFfElPA2/DuqhQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      gatsby: ^5.0.0-next
 
   gatsby-worker@2.13.1:
     resolution: {integrity: sha512-CEm+5M2+3PzPcqTaJ0xjNuorQ3d1PfnKG1yqRRPfw8LFdPiycGhZAug/jqx0iTyVWXFHakEmddlykGFEbq54/Q==}
@@ -10371,6 +10380,13 @@ snapshots:
     transitivePeerDependencies:
       - graphql
       - supports-color
+
+  gatsby-transformer-yaml@5.13.1(gatsby@5.13.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3)):
+    dependencies:
+      '@babel/runtime': 7.24.8
+      gatsby: 5.13.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@0.21.3)
+      js-yaml: 4.1.0
+      lodash: 4.17.21
 
   gatsby-worker@2.13.1:
     dependencies:
