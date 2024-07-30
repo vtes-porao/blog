@@ -6,7 +6,7 @@ const Card = (props) => {
 
   function handleClick() {
     dispatch({
-      type: "click",
+      type: "open",
     });
   }
 

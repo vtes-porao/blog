@@ -14,11 +14,15 @@ interface ICardReducerHoverAction {
   name: string;
 }
 
-interface ICardReducerClickAction {
-  type: 'click',
+interface ICardReducerOpenAction {
+  type: 'open',
 }
 
-type ICardReducerAction = ICardReducerHoverAction | ICardReducerClickAction;
+interface ICardReducerCloseAction {
+  type: 'close',
+}
+
+type ICardReducerAction = ICardReducerHoverAction | ICardReducerOpenAction | ICardReducerCloseAction; 
 
 
 const initialState: ICard = {
@@ -64,10 +68,15 @@ export function cardReducer(state: ICard, action: ICardReducerAction) {
         link: cardLink(id),
         show: state.show
       }
-    case 'click':
+    case 'open':
       return {
         ...state,
         show: true
+      }
+    case 'close':
+      return {
+        ...state,
+        show: false
       }
   }
 }
