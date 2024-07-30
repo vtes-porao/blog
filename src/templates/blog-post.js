@@ -1,16 +1,16 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import Seo from "../components/seo";
 
 const BlogPostTemplate = ({
-  data: { previous, next, site, mdx: post},
+  data: { previous, next, site, mdx: post },
   location,
-  children
+  children,
 }) => {
-  const siteTitle = site.siteMetadata?.title || `Title`
+  const siteTitle = site.siteMetadata?.title || `Title`;
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -25,8 +25,8 @@ const BlogPostTemplate = ({
         </header>
         {children}
         <hr />
-        <footer>
-          <Bio />
+        <footer className="py-6">
+          <Bio author={post.frontmatter.author} />
         </footer>
       </article>
       <nav className="blog-post-nav">
@@ -56,8 +56,8 @@ const BlogPostTemplate = ({
         </ul>
       </nav>
     </Layout>
-  )
-}
+  );
+};
 
 export const Head = ({ data: { mdx: post } }) => {
   return (
@@ -65,10 +65,10 @@ export const Head = ({ data: { mdx: post } }) => {
       title={post.frontmatter.title}
       description={post.frontmatter.description || post.excerpt}
     />
-  )
-}
+  );
+};
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const query = graphql`
   query BlogPostBySlug(
@@ -81,10 +81,14 @@ export const query = graphql`
         title
       }
     }
-    mdx(id: {eq: $id}) {
+    mdx(id: { eq: $id }) {
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        author {
+          name
+          bio
+        }
       }
     }
     previous: mdx(id: { eq: $previousPostId }) {
@@ -104,4 +108,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

@@ -4,7 +4,7 @@ const { transformCards } = require("./cards");
 const { transformIcons } = require("./icons");
 const argv = require("minimist")(process.argv.slice(2));
 
-const DIR_SOURCE = path.join(__dirname, "..", "..", "blog");
+const DIR_SOURCE = path.join(__dirname, "..", "..", "blog", "posts");
 const DIR_TRANSFORMED = path.join(__dirname, "..", "..", "transformed");
 const FILENAME_MDX = "index.mdx";
 
